@@ -1,25 +1,25 @@
-import { IsEmail, Length, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsEmail, Length, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
 
 class Phone {
   @Length(2, 2)
-  prefix: string;
+  prefix: string
 
   @Length(8, 9)
-  number: string;
+  number: string
 }
 
 export class CreateContactDto {
   @Length(2, 20)
-  firstName: string;
+  firstName: string
 
   @Length(2, 20)
-  secondName: string;
+  lastName: string
 
   @IsEmail()
-  email: string;
+  email: string
 
   @ValidateNested()
   @Type(() => Phone)
-  phones: Phone[];
+  phones: Phone[]
 }

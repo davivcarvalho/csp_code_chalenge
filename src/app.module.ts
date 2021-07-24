@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ContactsModule } from './useCases/contacts/contacts.module';
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { ContactsModule } from './useCases/contacts/contacts.module'
 
 @Module({
   imports: [
@@ -15,11 +15,12 @@ import { ContactsModule } from './useCases/contacts/contacts.module';
       database: 'csp',
       synchronize: true,
       autoLoadEntities: true,
-      entities: [__dirname + '/entities/*{.ts,.js}'],
+      logging: true,
+      entities: [__dirname + '/entities/*{.ts,.js}']
     }),
-    ContactsModule,
+    ContactsModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

@@ -1,20 +1,20 @@
-import { Phone } from 'src/entities/phone.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Phone } from 'src/entities/phone.entity'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Contact {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  fisrtName: string;
+  firstName: string
 
   @Column()
-  lastName: string;
+  lastName: string
 
   @Column()
-  email: string;
+  email: string
 
-  @OneToMany(() => Phone, (phone) => phone.user)
-  phones: Phone[];
+  @OneToMany(() => Phone, phone => phone.user)
+  phones: Phone[]
 }
