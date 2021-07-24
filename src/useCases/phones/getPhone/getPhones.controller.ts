@@ -9,6 +9,6 @@ export class GetPhoneController {
   async findOne(@Param('id') phoneId: string) {
     const phone = await this.getPhoneService.findOne(phoneId)
 
-    return { phone }
+    return { phone: phone || null }
   }
 }
