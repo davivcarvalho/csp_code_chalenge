@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Contact } from './entities/contact.entity';
-import { Phone } from './entities/phone.entity';
 import { ContactsModule } from './useCases/contacts/contacts.module';
 
 @Module({
@@ -16,7 +14,8 @@ import { ContactsModule } from './useCases/contacts/contacts.module';
       password: 'example',
       database: 'csp',
       synchronize: true,
-      entities: [Contact, Phone],
+      autoLoadEntities: true,
+      entities: [__dirname + '/entities/*{.ts,.js}'],
     }),
     ContactsModule,
   ],

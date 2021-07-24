@@ -1,6 +1,7 @@
 import { Phone } from 'src/entities/phone.entity';
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Contact {
   @PrimaryGeneratedColumn()
   id: number;
