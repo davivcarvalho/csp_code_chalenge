@@ -9,6 +9,6 @@ export class GetContactController {
   async getOne(@Param('id') id: string) {
     const contact = await this.getContactService.getOneById(id)
 
-    return { contact }
+    return { contact: contact || null }
   }
 }
