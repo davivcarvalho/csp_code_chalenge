@@ -8,6 +8,6 @@ export class GetContactService {
   constructor(@InjectRepository(Contact) private contactsRepository: Repository<Contact>) {}
 
   getOneById(id: string) {
-    return this.contactsRepository.findOne(id)
+    return this.contactsRepository.findOne(id, { relations: ['phones'] })
   }
 }
