@@ -9,7 +9,7 @@ export class EditContactService {
   constructor(@InjectRepository(Contact) private contactsRepository: Repository<Contact>) {}
 
   async editOne(id: string, data: EditContactDto) {
-    const contact = await this.contactsRepository.findOne(id, { relations: ['phones'] })
+    const contact = await this.contactsRepository.findOne(id)
     if (!contact) throw new HttpException('Not found a editable contact!', HttpStatus.BAD_REQUEST)
 
     if (data.email) contact.email = data.email
