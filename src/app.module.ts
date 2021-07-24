@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Contact } from './entities/contact.entity';
 import { Phone } from './entities/phone.entity';
+import { ContactsModule } from './useCases/contacts/contacts.module';
 
 @Module({
   imports: [
@@ -15,9 +16,9 @@ import { Phone } from './entities/phone.entity';
       password: 'example',
       database: 'csp',
       synchronize: true,
-      autoLoadEntities: true,
       entities: [Contact, Phone],
     }),
+    ContactsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
