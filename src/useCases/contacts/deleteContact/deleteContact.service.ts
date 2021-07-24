@@ -9,6 +9,6 @@ export class DeleteContactService {
 
   async deleteOne(id: string) {
     const { affected } = await this.contactsRepository.delete(id)
-    if (!affected) throw new HttpException('Delete action not performed!', HttpStatus.INTERNAL_SERVER_ERROR)
+    if (affected === 0) throw new HttpException('Delete action not performed!', HttpStatus.INTERNAL_SERVER_ERROR)
   }
 }
