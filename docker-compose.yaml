@@ -28,6 +28,7 @@ services:
     tty: true
     volumes:
       - ./:/home/app
+      - /home/app/node_modules
     networks: 
       - local
 
