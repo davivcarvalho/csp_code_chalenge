@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ContactsModule } from './useCases/contacts/contacts.module'
+import { PhonesModule } from './useCases/phones/phones.module'
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ContactsModule } from './useCases/contacts/contacts.module'
       logging: true,
       entities: [__dirname + '/entities/*{.ts,.js}']
     }),
-    ContactsModule
+    ContactsModule,
+    PhonesModule
   ]
 })
 export class AppModule {}
