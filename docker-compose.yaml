@@ -32,6 +32,15 @@ services:
     networks: 
       - local
 
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks: 
+      - local
+  
+    
+
 networks:
   local:
     driver: bridge
