@@ -1,4 +1,4 @@
-import { IsEmail, Length, ValidateNested } from 'class-validator'
+import { ArrayNotEmpty, IsEmail, Length, ValidateNested } from 'class-validator'
 import { Type } from 'class-transformer'
 
 class Phone {
@@ -19,6 +19,7 @@ export class CreateContactDto {
   @IsEmail()
   email: string
 
+  @ArrayNotEmpty()
   @ValidateNested()
   @Type(() => Phone)
   phones: Phone[]
