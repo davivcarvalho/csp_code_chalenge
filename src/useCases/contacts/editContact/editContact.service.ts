@@ -29,7 +29,8 @@ export class EditContactService {
 
   async editContactPhones(contact: Contact, givenPhones: Phone[]) {
     const deletedPhones = contact.phones.filter(x => !givenPhones.some(y => y.id === x.id))
-    if (deletedPhones.length > 0) await this.phonesRepository.delete(deletedPhones.map(e => e.id))
+    if (deletedPhones.length > 0 && contact.phones.length > 1)
+      await this.phonesRepository.delete(deletedPhones.map(e => e.id))
 
     const phonesToInsert = givenPhones.filter(e => !e.id)
     if (phonesToInsert.length > 0) {
