@@ -69,46 +69,6 @@ describe('AppController (e2e)', () => {
       expect(mockContactEdited).toEqual({ ...mockContactCreated, ...editData })
       expect(mockContactEdited.phones).toEqual(mockContactCreated.phones)
     })
-
-    it('should insert phone on updated contact', async () => {
-      mockContactEdited.phones = [...mockContactEdited.phones, { prefix: '99', number: '999999999' }]
-      const response = await request(app.getHttpServer())
-        .put(`/contact/${mockContactEdited.id}`)
-        .send(mockContactEdited)
-
-      mockContactEdited = response.body.contact
-
-      expect(response.body.contact.phones[1].id).not.toBeUndefined()
-      expect(response.body.contact.phones[1].prefix).toEqual('99')
-      expect(response.body.contact.phones[1].number).toEqual('999999999')
-    })
-
-    it('should remove phone on updated contact', async () => {
-      mockContactEdited.phones = [mockContactEdited.phones[0]]
-
-      const response = await request(app.getHttpServer())
-        .put(`/contact/${mockContactEdited.id}`)
-        .send(mockContactEdited)
-
-      mockContactEdited = response.body.contact
-
-      expect(response.body.contact.phones.length).toEqual(1)
-      expect(response.body.contact.phones[0].number).not.toEqual('999999999')
-    })
-
-    it('should edit phone on updated contact', async () => {
-      mockContactEdited.phones = [{ id: mockContactEdited.phones[0].id, prefix: '55', number: '55555555' }]
-
-      const response = await request(app.getHttpServer())
-        .put(`/contact/${mockContactEdited.id}`)
-        .send(mockContactEdited)
-
-      mockContactEdited = response.body.contact
-
-      expect(response.body.contact.phones.length).toEqual(1)
-      expect(response.body.contact.phones[0].number).toEqual('55555555')
-      expect(response.body.contact.phones[0].prefix).toEqual('55')
-    })
   })
 
   describe('/contact/:id, (DELETE)', () => {
