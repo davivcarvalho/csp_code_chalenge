@@ -1,14 +1,21 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Contact } from '../../../entities//contact.entity'
+import { Contact } from '../../../entities/contact.entity'
 import { Repository } from 'typeorm'
+import { Phone } from '../../../entities/phone.entity'
 
 @Injectable()
 export class DeleteContactService {
-  constructor(@InjectRepository(Contact) private contactsRepository: Repository<Contact>) {}
+  constructor(
+    @InjectRepository(Contact) private contactsRepository: Repository<Contact>,
+    @InjectRepository(Phone) private phonesRepository: Repository<Phone>
+  ) {}
 
   async deleteOne(id: string) {
-    const { affected } = await this.contactsRepository.delete(id)
-    if (affected === 0) throw new HttpException('Delete action not performed!', HttpStatus.INTERNAL_SERVER_ERROR)
+    const contact = await this.contactsRepository.findOne(id, { relations: ['phones'] })
+    if (!contact) throw new HttpException('Not found a contact with given ID!', HttpStatus.INTERNAL_SERVER_ERROR)
+
+    await this.phonesRepository.delete({ user: contact.id.toString() })
+    await this.contactsRepository.remove(contact)
   }
 }

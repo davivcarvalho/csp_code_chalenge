@@ -14,7 +14,6 @@ import { PhonesModule } from './useCases/phones/phones.module'
       database: 'csp',
       synchronize: true,
       autoLoadEntities: true,
-      logging: true,
       entities: [__dirname + '/entities/*{.ts,.js}']
     }),
     ContactsModule,

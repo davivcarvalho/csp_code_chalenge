@@ -9,6 +9,7 @@ export class DeleteContactController {
   @HttpCode(204)
   async deleteOne(@Param('contactId') contactId: string) {
     await this.deleteContactService.deleteOne(contactId)
-    return null
+
+    return {}
   }
 }
