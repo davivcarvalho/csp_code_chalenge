@@ -15,6 +15,6 @@ export class Contact {
   @Column()
   email: string
 
-  @OneToMany(() => Phone, phone => phone.user, { cascade: true, onDelete: 'CASCADE' })
+  @OneToMany(() => Phone, phone => phone.user)
   phones: Phone[]
 }
