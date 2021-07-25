@@ -8,6 +8,8 @@ export class EditContactController {
 
   @Put(':contactId')
   async editOne(@Param('contactId') contactId: string, @Body() data: EditContactDto) {
-    return await this.editContactService.editOne(contactId, data)
+    const contact = await this.editContactService.editOne(contactId, data)
+
+    return { contact }
   }
 }

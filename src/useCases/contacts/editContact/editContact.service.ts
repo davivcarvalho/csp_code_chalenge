@@ -20,7 +20,7 @@ export class EditContactService {
     if (data.firstName) contact.firstName = data.firstName
     if (data.lastName) contact.lastName = data.lastName
 
-    await this.editContactPhones(contact, data.phones as Phone[])
+    if (data.phones) await this.editContactPhones(contact, data.phones as Phone[])
 
     await this.contactsRepository.save(contact)
 
