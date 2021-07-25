@@ -1,4 +1,4 @@
-import { Phone } from 'src/entities/phone.entity'
+import { Phone } from './phone.entity'
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
