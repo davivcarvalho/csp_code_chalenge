@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Contact } from '../../../entities/contact.entity'
 import { Phone } from '../../../entities/phone.entity'
 import { Repository } from 'typeorm'
-import { CreatePhoneDTO } from './createPhone.dto'
+import { CreatePhoneDto } from './createPhone.dto'
 
 @Injectable()
 export class CreatePhoneService {
@@ -12,7 +12,7 @@ export class CreatePhoneService {
     @InjectRepository(Contact) private contactsRepository: Repository<Contact>
   ) {}
 
-  async createOne(contactId: string, data: CreatePhoneDTO) {
+  async createOne(contactId: string, data: CreatePhoneDto) {
     const contact = await this.contactsRepository.findOne(contactId, { relations: ['phones'] })
     if (!contact) throw new HttpException("Phone owner hadn't been found!", HttpStatus.BAD_REQUEST)
 

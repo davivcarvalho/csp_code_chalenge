@@ -1,3 +1,4 @@
+import { ApiPropertyOptional } from '@nestjs/swagger'
 import { IsEmail, IsOptional, Length } from 'class-validator'
 
 export class EditContactDto {
@@ -5,6 +6,7 @@ export class EditContactDto {
   @Length(2, 20)
   firstName?: string
 
+  @ApiPropertyOptional()
   @IsOptional()
   @Length(2, 20)
   lastName?: string

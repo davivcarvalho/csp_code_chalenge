@@ -1,6 +1,6 @@
 import { Length } from 'class-validator'
 
-export class CreatePhoneDTO {
+export class CreatePhoneDto {
   @Length(2, 20)
   prefix: string
 

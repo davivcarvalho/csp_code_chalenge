@@ -13,6 +13,8 @@ export class EditPhoneService {
     const updateData = { number, prefix }
     if (!number) Reflect.deleteProperty(updateData, 'number')
     if (!prefix) Reflect.deleteProperty(updateData, 'prefix')
+    if (!number && !prefix)
+      throw new HttpException("Update action wasn't been performed! Empty request body!", HttpStatus.BAD_REQUEST)
 
     const { affected } = await this.phoneRepository.update({ user: contactId, id: phoneId }, updateData)
 
