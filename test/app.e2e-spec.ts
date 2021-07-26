@@ -23,7 +23,7 @@ describe('AppController (e2e)', () => {
     email: 'davi@davi.com',
     phones: [{ prefix: '33', number: '988888888' }]
   }
-  let mockContactCreated, mockContactEdited
+  let mockContactCreated, mockContactEdited, createdPhone
 
   describe('/contacts (POST)', () => {
     it('should reject invalid request body', async () => {
@@ -71,10 +71,95 @@ describe('AppController (e2e)', () => {
     })
   })
 
+  describe('/contact/:contactId/phones (GET)', () => {
+    it('should return a list of contact phones', async () => {
+      const response = await request(app.getHttpServer()).get(`/contact/${mockContactCreated.id}/phones`)
+
+      expect(response.body.phones).toEqual(mockContactEdited.phones)
+    })
+
+    it('should return a empty array when not have contact phones', async () => {
+      const response = await request(app.getHttpServer()).get(`/contact/877897/phones`)
+
+      expect(response.body.phones.length).toBe(0)
+    })
+  })
+
+  describe('/contact/:contactId/phone/:phoneId (GET)', () => {
+    it('should return a contact phones', async () => {
+      const response = await request(app.getHttpServer()).get(
+        `/contact/${mockContactCreated.id}/phone/${mockContactCreated.phones[0].id}`
+      )
+
+      expect(response.body.phone).toEqual(mockContactEdited.phones[0])
+    })
+
+    it('should return null when not have contact phone', async () => {
+      const response = await request(app.getHttpServer()).get(`/contact/877897/phone/22`)
+
+      expect(response.body.phone).toBeNull()
+    })
+  })
+
+  describe('/contact/:contactId/phone/:phoneId (PUT)', () => {
+    it('should edit a contact phone', async () => {
+      const payload = { prefix: '99', number: '88888888' }
+
+      const response = await request(app.getHttpServer())
+        .put(`/contact/${mockContactCreated.id}/phone/${mockContactCreated.phones[0].id}`)
+        .send(payload)
+      const { body } = await request(app.getHttpServer()).get(
+        `/contact/${mockContactCreated.id}/phone/${mockContactCreated.phones[0].id}`
+      )
+
+      expect(response.statusCode).toBe(204)
+      expect(body.phone).toEqual({ ...mockContactCreated.phones[0], ...payload })
+    })
+  })
+
+  describe('/contact/:contactId/phone (POST)', () => {
+    it("shouldn't create a contact phone when wrong data is passed", async () => {
+      const payload = { prefix: '99' }
+
+      const response = await request(app.getHttpServer()).post(`/contact/${mockContactCreated.id}/phones`).send(payload)
+
+      expect(response.statusCode).toBe(400)
+    })
+
+    it('should create a contact phone', async () => {
+      const payload = { prefix: '99', number: '12355547' }
+
+      const response = await request(app.getHttpServer()).post(`/contact/${mockContactCreated.id}/phones`).send(payload)
+
+      createdPhone = response.body.phone
+
+      expect(response.statusCode).toBe(201)
+      expect(response.body.phone.prefix).toEqual(payload.prefix)
+      expect(response.body.phone.number).toEqual(payload.number)
+    })
+  })
+
+  describe('/contact/:contactId/phones/:phoneId (DELETE)', () => {
+    it('should delete a contact phone when it had at least one phone registered', async () => {
+      const response = await request(app.getHttpServer()).delete(
+        `/contacts/${mockContactCreated.id}/phones/${createdPhone.id}`
+      )
+
+      expect(response.statusCode).toBe(204)
+    })
+    it("shouldn't delete a contact phone when it had only one phone registered", async () => {
+      const response = await request(app.getHttpServer()).delete(
+        `/contacts/${mockContactCreated.id}/phones/${mockContactCreated.phones[0].id}`
+      )
+
+      expect(response.statusCode).toBe(500)
+    })
+  })
+
   describe('/contact/:id, (DELETE)', () => {
     it('should delete mock contact', async () => {
       const response = await request(app.getHttpServer()).delete(`/contact/${mockContactEdited.id}`)
-      console.log(response.body)
+
       expect(response.statusCode).toBe(204)
     })
   })
