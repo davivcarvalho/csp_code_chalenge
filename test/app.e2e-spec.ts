@@ -46,16 +46,16 @@ describe('AppController (e2e)', () => {
     })
   })
 
-  describe('/contact/:id, (GET)', () => {
+  describe('/contacts/:id, (GET)', () => {
     it('should return the mock contact', async () => {
-      const response = await request(app.getHttpServer()).get(`/contact/${mockContactCreated.id}`)
+      const response = await request(app.getHttpServer()).get(`/contacts/${mockContactCreated.id}`)
 
       expect(response.statusCode).toBe(200)
       expect(response.body.contact).toEqual(mockContactCreated)
     })
   })
 
-  describe('/contact/:id (PUT)', () => {
+  describe('/contacts/:id (PUT)', () => {
     it('should edit firstName, secondName and email properties', async () => {
       const editData = {
         firstName: 'Davi Editado',
@@ -63,7 +63,7 @@ describe('AppController (e2e)', () => {
         email: 'editado@editado.com',
         phones: mockContactCreated.phones
       }
-      const response = await request(app.getHttpServer()).put(`/contact/${mockContactCreated.id}`).send(editData)
+      const response = await request(app.getHttpServer()).put(`/contacts/${mockContactCreated.id}`).send(editData)
       mockContactEdited = response.body.contact
 
       expect(mockContactEdited).toEqual({ ...mockContactCreated, ...editData })
@@ -71,31 +71,31 @@ describe('AppController (e2e)', () => {
     })
   })
 
-  describe('/contact/:contactId/phones (GET)', () => {
+  describe('/contacts/:contactId/phones (GET)', () => {
     it('should return a list of contact phones', async () => {
-      const response = await request(app.getHttpServer()).get(`/contact/${mockContactCreated.id}/phones`)
+      const response = await request(app.getHttpServer()).get(`/contacts/${mockContactCreated.id}/phones`)
 
       expect(response.body.phones).toEqual(mockContactEdited.phones)
     })
 
     it('should return a empty array when not have contact phones', async () => {
-      const response = await request(app.getHttpServer()).get(`/contact/877897/phones`)
+      const response = await request(app.getHttpServer()).get(`/contacts/877897/phones`)
 
       expect(response.body.phones.length).toBe(0)
     })
   })
 
-  describe('/contact/:contactId/phone/:phoneId (GET)', () => {
-    it('should return a contact phones', async () => {
+  describe('/contacts/:contactId/phones/:phoneId (GET)', () => {
+    it('should return a contact phone', async () => {
       const response = await request(app.getHttpServer()).get(
-        `/contact/${mockContactCreated.id}/phone/${mockContactCreated.phones[0].id}`
+        `/contacts/${mockContactCreated.id}/phones/${mockContactCreated.phones[0].id}`
       )
 
       expect(response.body.phone).toEqual(mockContactEdited.phones[0])
     })
 
     it('should return null when not have contact phone', async () => {
-      const response = await request(app.getHttpServer()).get(`/contact/877897/phone/22`)
+      const response = await request(app.getHttpServer()).get(`/contacts/877897/phones/22`)
 
       expect(response.body.phone).toBeNull()
     })
@@ -106,10 +106,10 @@ describe('AppController (e2e)', () => {
       const payload = { prefix: '99', number: '88888888' }
 
       const response = await request(app.getHttpServer())
-        .put(`/contact/${mockContactCreated.id}/phone/${mockContactCreated.phones[0].id}`)
+        .put(`/contacts/${mockContactCreated.id}/phones/${mockContactCreated.phones[0].id}`)
         .send(payload)
       const { body } = await request(app.getHttpServer()).get(
-        `/contact/${mockContactCreated.id}/phone/${mockContactCreated.phones[0].id}`
+        `/contacts/${mockContactCreated.id}/phones/${mockContactCreated.phones[0].id}`
       )
 
       expect(response.statusCode).toBe(204)
@@ -121,7 +121,9 @@ describe('AppController (e2e)', () => {
     it("shouldn't create a contact phone when wrong data is passed", async () => {
       const payload = { prefix: '99' }
 
-      const response = await request(app.getHttpServer()).post(`/contact/${mockContactCreated.id}/phones`).send(payload)
+      const response = await request(app.getHttpServer())
+        .post(`/contacts/${mockContactCreated.id}/phones`)
+        .send(payload)
 
       expect(response.statusCode).toBe(400)
     })
@@ -129,7 +131,9 @@ describe('AppController (e2e)', () => {
     it('should create a contact phone', async () => {
       const payload = { prefix: '99', number: '12355547' }
 
-      const response = await request(app.getHttpServer()).post(`/contact/${mockContactCreated.id}/phones`).send(payload)
+      const response = await request(app.getHttpServer())
+        .post(`/contacts/${mockContactCreated.id}/phones`)
+        .send(payload)
 
       createdPhone = response.body.phone
 
@@ -156,9 +160,9 @@ describe('AppController (e2e)', () => {
     })
   })
 
-  describe('/contact/:id, (DELETE)', () => {
+  describe('/contacts/:id, (DELETE)', () => {
     it('should delete mock contact', async () => {
-      const response = await request(app.getHttpServer()).delete(`/contact/${mockContactEdited.id}`)
+      const response = await request(app.getHttpServer()).delete(`/contacts/${mockContactEdited.id}`)
 
       expect(response.statusCode).toBe(204)
     })

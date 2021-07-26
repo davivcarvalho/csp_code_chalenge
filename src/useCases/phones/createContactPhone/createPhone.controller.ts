@@ -2,7 +2,7 @@ import { Body, Controller, Param, Post } from '@nestjs/common'
 import { CreatePhoneDTO } from './createPhone.dto'
 import { CreatePhoneService } from './createPhone.service'
 
-@Controller('/contact/:contactId/phones')
+@Controller('/contacts/:contactId/phones')
 export class CreatePhoneController {
   constructor(private createPhoneService: CreatePhoneService) {}
 

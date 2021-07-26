@@ -2,7 +2,7 @@ import { Body, Controller, Param, Put } from '@nestjs/common'
 import { EditContactDto } from './editContact.dto'
 import { EditContactService } from './editContact.service'
 
-@Controller('contact')
+@Controller('contacts')
 export class EditContactController {
   constructor(private editContactService: EditContactService) {}
 

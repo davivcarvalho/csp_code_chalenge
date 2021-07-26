@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, Param, Put } from '@nestjs/common'
 import { EditPhoneDto } from './editPhone.dto'
 import { EditPhoneService } from './editPhone.service'
 
-@Controller('/contact/:contactId/phone')
+@Controller('/contacts/:contactId/phones')
 export class EditPhoneController {
   constructor(private editPhoneService: EditPhoneService) {}
 
