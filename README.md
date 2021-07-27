@@ -21,7 +21,7 @@ Desafio para vaga de Desenvolvedor Node na CSP Tecnologia
 2. cd csp_code_chalenge
 ```
 
-* Inicie os containers usando o docker-compose:
+* Inicie o ambiente de desenvolvimento utilizando o docker-compose:
 
 ```
 3. docker-compose up
