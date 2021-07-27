@@ -19,7 +19,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: node-mysql-app
     ports: 
       - 3000:3000
     depends_on:
@@ -27,8 +26,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./:/home/app
-      - /home/app/node_modules
+      - ./:/usr/src/app
     networks: 
       - local
 
