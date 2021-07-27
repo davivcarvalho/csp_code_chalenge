@@ -20,6 +20,6 @@ export class CreateContactService {
       phones
     })
 
-    return await this.contactsRepository.save(contact)
+    return this.contactsRepository.save(contact)
   }
 }
